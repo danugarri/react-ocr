@@ -5,10 +5,10 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import AlertDialog from '../Dialog/Dialog';
 
 export const OCR: React.FC<OCRProps> = ({ selectedImage }) => {
-  const { error, isLoading, text } = useOCRHandler(selectedImage);
+  const { error, isLoading, text, progress } = useOCRHandler(selectedImage);
 
   if (isLoading) {
-    return <ProgressBar />;
+    return <ProgressBar OCRProgress={progress} />;
   } else if (error) {
     return <AlertDialog error={error} />;
   } else {
