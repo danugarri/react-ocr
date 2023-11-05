@@ -5,18 +5,18 @@ import { OCR } from './components/OCR/OCR';
 
 function App() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       setSelectedImage(file);
     }
   };
+  const resetSelectedImage = () => setSelectedImage(null);
 
   return (
     <>
       <UploadImage selectedImage={selectedImage} handleImageChange={handleImageChange} />
-      <OCR selectedImage={selectedImage} />
+      <OCR selectedImage={selectedImage} resetSelectedImage={resetSelectedImage} />
     </>
   );
 }

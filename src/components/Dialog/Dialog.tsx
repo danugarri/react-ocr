@@ -6,7 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog({ error }: { error: Error | undefined }) {
+export default function AlertDialog({
+  error,
+  resetSelectedImage,
+}: {
+  error: Error | undefined;
+  resetSelectedImage: (arg: File | null) => void;
+}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -15,6 +21,7 @@ export default function AlertDialog({ error }: { error: Error | undefined }) {
 
   const handleClose = () => {
     setOpen(false);
+    resetSelectedImage(null);
   };
   useEffect(() => {
     if (error) handleClickOpen();
@@ -28,7 +35,7 @@ export default function AlertDialog({ error }: { error: Error | undefined }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{'Tesseract.js Library Fails'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <>{error}</>

@@ -5,4 +5,5 @@ export type RecognizeConfigType = {
 };
 export type OCRProps = {
   selectedImage: File | null;
+  resetSelectedImage: () => void;
 };
