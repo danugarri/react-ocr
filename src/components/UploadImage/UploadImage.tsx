@@ -10,7 +10,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ handleImageChange, selectedIm
     <div>
       <button className="uploadImage-button">
         <label htmlFor="input-file" className="uploadImage-label">
-          Select a file
+          Select an Image
         </label>
       </button>
       <input
@@ -30,7 +30,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ handleImageChange, selectedIm
           />
         </div>
       ) : (
-        <p>No Files selected</p>
+        <p className="uploadImage-no-files">No Files selected</p>
       )}
     </div>
   );

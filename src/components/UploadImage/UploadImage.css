@@ -15,3 +15,7 @@
 .uploadImage-label {
     cursor: inherit;
 }
+
+.uploadImage-no-files {
+    color: rgb(185, 36, 36);
+}
