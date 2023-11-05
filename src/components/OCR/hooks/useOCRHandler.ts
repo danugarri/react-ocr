@@ -21,7 +21,7 @@ export const useOCRHandler = (selectedImage: File | null) => {
       setIsloading(true);
       const config: RecognizeConfigType = {
         image: path,
-        langs: 'engspa', // Support for English and Spanish text
+        langs: 'eng+spa', // Support for English and Spanish text
         options: {
           logger: ({ progress, status }) => {
             console.log({ status, progress });
