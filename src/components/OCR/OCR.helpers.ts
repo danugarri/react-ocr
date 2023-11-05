@@ -5,7 +5,7 @@ export const getText = async (path: string) => {
   let status: string | null = null;
   const config: RecognizeConfigType = {
     image: path,
-    langs: 'eng',
+    langs: 'eng+spa', // Support for English and Spanish text
     options: {
       logger: (message: LoggerMessage) => {
         console.log(message);
