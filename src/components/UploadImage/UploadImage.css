@@ -1,0 +1,17 @@
+.uploadImage-not-displayed {
+    display: none;
+}
+
+.uploadImage-selected-image {
+    width: 80px;
+    height: 80px;
+}
+
+.uploadImage-button {
+    /* background-color: ; */
+    cursor: pointer;
+}
+
+.uploadImage-label {
+    cursor: inherit;
+}
