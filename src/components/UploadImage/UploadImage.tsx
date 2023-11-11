@@ -26,7 +26,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ handleImageChange, selectedIm
         type="file"
         id="input-file"
         ref={fileInputRef}
-        accept="image/*"
+        accept="image/bmp, jpg, png, pbm, webp"
         onChange={handleImageChange}
         className="uploadImage-not-displayed"
       />

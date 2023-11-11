@@ -5,20 +5,20 @@ import { OCRStatus } from '../OCR.consts';
 
 export const useOCRHandler = (selectedImage: File | null) => {
   const [text, setText] = useState<string>();
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [progress, setProgress] = useState(0);
 
   const errorSetter = (error: Error) => {
     setError(error);
-    setIsloading(false);
+    setIsLoading(false);
   };
 
   const getProgress = (progress: number) => setProgress(progress);
 
   useEffect(() => {
     const ocrHandler = async (path: string) => {
-      setIsloading(true);
+      setIsLoading(true);
       const config: RecognizeConfigType = {
         image: path,
         langs: 'eng+spa', // Support for English and Spanish text
@@ -44,7 +44,7 @@ export const useOCRHandler = (selectedImage: File | null) => {
       if (text) {
         console.log(text);
         setText(text);
-        setIsloading(false);
+        setIsLoading(false);
       }
     };
     if (selectedImage) {
