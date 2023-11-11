@@ -1,4 +1,4 @@
-import Tesseract, { OEM } from 'tesseract.js';
+import Tesseract, { OEM, Scheduler } from 'tesseract.js';
 import { OCRStatus } from './OCR.consts';
 import { ConfigType, RecognizeConfigType } from './OCR.types';
 
@@ -21,11 +21,26 @@ export const getPreProcessedImage = async (selectedImage: File | null) =>
     reader.readAsDataURL(selectedImage as Blob);
   });
 
-export const getWorker = async ({ langs, options }: Omit<ConfigType, 'image'>) =>
-  await Tesseract.createWorker(langs, OEM.DEFAULT, {
+export const WorkerGenerator = async (
+  scheduler: Scheduler,
+  { langs, options }: Omit<ConfigType, 'image'>,
+) => {
+  const worker = await Tesseract.createWorker(langs, OEM.DEFAULT, {
     logger: options?.logger,
     errorHandler: options?.errorHandler,
   });
+  scheduler.addWorker(worker);
+};
+export const workersSetUp = async (
+  scheduler: Scheduler,
+  { langs, options }: Omit<ConfigType, 'image'>,
+  workersNumber = 4,
+) => {
+  const workersArray = Array(workersNumber);
+  for (let i = 0; i < workersNumber; i++) {
+    workersArray[i] = await WorkerGenerator(scheduler, { langs, options });
+  }
+};
 export const getConfig = (
   preProcessedImage: string,
   getProgress: (progress: number) => void,

@@ -38,7 +38,7 @@ export default function AlertDialog({
         <DialogTitle id="alert-dialog-title">{'Tesseract.js Library Fails'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <>{error}</>
+            <>{error?.toString()}</>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

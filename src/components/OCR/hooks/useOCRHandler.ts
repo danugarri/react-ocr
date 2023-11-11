@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getConfig, getNormalizedText, getPreProcessedImage, getWorker } from '../ocr.helpers';
+import { getConfig, getNormalizedText, getPreProcessedImage, workersSetUp } from '../ocr.helpers';
+import Tesseract from 'tesseract.js';
 
 export const useOCRHandler = (selectedImage: File | null) => {
   const [text, setText] = useState<string | undefined>();
@@ -13,18 +14,23 @@ export const useOCRHandler = (selectedImage: File | null) => {
   };
 
   const getProgress = (progress: number) => setProgress(progress);
-
   useEffect(() => {
+    const scheduler = Tesseract.createScheduler();
     const ocrHandler = async () => {
       setIsLoading(true);
       try {
         const preProcessedImage = await getPreProcessedImage(selectedImage);
         const { image, langs, options } = getConfig(preProcessedImage, getProgress, errorSetter);
-        const worker = await getWorker({ langs, options });
+        await workersSetUp(scheduler, { langs, options }, 8);
 
         const {
           data: { text },
-        } = await worker.recognize(image, { rotateAuto: true }, { text: true, imageBinary: true });
+        } = await scheduler.addJob(
+          'recognize',
+          image,
+          { rotateAuto: true },
+          { text: true, imageBinary: true },
+        );
 
         if (text) {
           const normalizedText = getNormalizedText(text);
@@ -34,6 +40,7 @@ export const useOCRHandler = (selectedImage: File | null) => {
         }
       } catch (e) {
         errorSetter(e as Error);
+        console.log(e);
       }
     };
 
