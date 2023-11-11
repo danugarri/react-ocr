@@ -1,10 +1,8 @@
-import Tesseract from 'tesseract.js';
 import { useEffect, useState } from 'react';
-import { RecognizeConfigType } from '../OCR.types';
-import { OCRStatus } from '../OCR.consts';
+import { getConfig, getPreProcessedImage, getWorker } from '../ocr.helpers';
 
 export const useOCRHandler = (selectedImage: File | null) => {
-  const [text, setText] = useState<string>();
+  const [text, setText] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [progress, setProgress] = useState(0);
@@ -17,39 +15,31 @@ export const useOCRHandler = (selectedImage: File | null) => {
   const getProgress = (progress: number) => setProgress(progress);
 
   useEffect(() => {
-    const ocrHandler = async (path: string) => {
+    const ocrHandler = async () => {
       setIsLoading(true);
-      const config: RecognizeConfigType = {
-        image: path,
-        langs: 'eng+spa', // Support for English and Spanish text
-        options: {
-          logger: ({ progress, status }) => {
-            console.log({ status, progress });
-            if (status === OCRStatus.RECOGNIZING_TEXT)
-              if (progress) {
-                getProgress(progress);
-              }
-          },
-          errorHandler: (e) => {
-            console.log(e);
-            errorSetter(e.toString());
-          },
-        },
-      };
+      try {
+        const preProcessedImage = await getPreProcessedImage(selectedImage);
+        const { image, langs, options } = getConfig(preProcessedImage, getProgress, errorSetter);
+        const worker = await getWorker({ langs, options });
 
-      const {
-        data: { text },
-      } = await Tesseract.recognize(config.image, config.langs, config.options);
+        const {
+          data: { text },
+        } = await worker.recognize(image, { rotateAuto: true }, { text: true, imageBinary: true });
 
-      if (text) {
-        console.log(text);
-        setText(text);
-        setIsLoading(false);
+        if (text) {
+          // Avoiding diacritic marks if wish
+          // const normalizedText = getNormalizedText(text);
+          console.log(text);
+          setText(text);
+          setIsLoading(false);
+        }
+      } catch (e) {
+        errorSetter(e as Error);
       }
     };
+
     if (selectedImage) {
-      const path = URL.createObjectURL(selectedImage);
-      ocrHandler(path);
+      ocrHandler();
     }
   }, [selectedImage]);
 
