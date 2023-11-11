@@ -51,5 +51,4 @@ export const getConfig = (
   return { ...config };
 };
 
-export const getNormalizedText = (text: string) =>
-  text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+export const getNormalizedText = (text: string) => text.normalize('NFC');

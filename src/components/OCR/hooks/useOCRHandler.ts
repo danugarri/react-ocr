@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getConfig, getPreProcessedImage, getWorker } from '../ocr.helpers';
+import { getConfig, getNormalizedText, getPreProcessedImage, getWorker } from '../ocr.helpers';
 
 export const useOCRHandler = (selectedImage: File | null) => {
   const [text, setText] = useState<string | undefined>();
@@ -27,10 +27,9 @@ export const useOCRHandler = (selectedImage: File | null) => {
         } = await worker.recognize(image, { rotateAuto: true }, { text: true, imageBinary: true });
 
         if (text) {
-          // Avoiding diacritic marks if wish
-          // const normalizedText = getNormalizedText(text);
+          const normalizedText = getNormalizedText(text);
           console.log(text);
-          setText(text);
+          setText(normalizedText);
           setIsLoading(false);
         }
       } catch (e) {
