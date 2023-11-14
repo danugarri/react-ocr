@@ -40,6 +40,7 @@ export const workersSetUp = async (
   for (let i = 0; i < workersNumber; i++) {
     workersArray[i] = await WorkerGenerator(scheduler, { langs, options });
   }
+  return workersArray;
 };
 export const getConfig = (
   preProcessedImage: string,
