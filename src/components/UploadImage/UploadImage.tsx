@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import './UploadImage.css';
+import { Tooltip } from '@mui/material';
 
 export type UploadImageProps = {
   selectedImage: File | null;
@@ -17,11 +18,13 @@ const UploadImage: React.FC<UploadImageProps> = ({ handleImageChange, selectedIm
 
   return (
     <div>
-      <button className="uploadImage-button" onClick={handleSelectImage}>
-        <label htmlFor="input-file" className="uploadImage-label">
-          Select an Image
-        </label>
-      </button>
+      <Tooltip title="Supported extensions .bmp, .jpg, .png, .pbm, .webp" placement="right">
+        <button className="uploadImage-button" onClick={handleSelectImage}>
+          <label htmlFor="input-file" className="uploadImage-label">
+            Select an Image
+          </label>
+        </button>
+      </Tooltip>
       <input
         type="file"
         id="input-file"
