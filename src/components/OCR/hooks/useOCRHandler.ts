@@ -45,6 +45,7 @@ export const useOCRHandler = (selectedImage: File | null) => {
         console.log(text);
         setText(text);
         setIsLoading(false);
+        setProgress(0);
       }
     };
     if (selectedImage) {
