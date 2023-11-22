@@ -6,13 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog({
+const AlertDialog = ({
   error,
   resetSelectedImage,
 }: {
   error: Error | undefined;
   resetSelectedImage: (arg: File | null) => void;
-}) {
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -28,26 +28,26 @@ export default function AlertDialog({
   }, [error]);
 
   return (
-    <React.Fragment>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{'Tesseract.js Library Fails'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <>{error}</>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Repeat</Button>
-          <Button onClick={handleClose} autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{'Tesseract.js Library Fails'}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          <>{error}</>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Repeat</Button>
+        <Button onClick={handleClose} autoFocus>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
-}
+};
+
+export default AlertDialog;
