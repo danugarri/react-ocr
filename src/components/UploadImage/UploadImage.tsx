@@ -1,27 +1,20 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import './UploadImage.css';
+import { Tooltip } from '@mui/material';
+import { UploadImageProps } from './uploadImage.types';
 
-export type UploadImageProps = {
-  selectedImage: File | null;
-  handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-const UploadImage: React.FC<UploadImageProps> = ({ handleImageChange, selectedImage }) => {
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleSelectImage = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Reset the input element
-    }
-  };
-
+const UploadImage: React.FC<UploadImageProps> = ({
+  handleImageChange,
+  selectedImage,
+  fileInputRef,
+}) => {
   return (
     <div>
-      <button className="uploadImage-button" onClick={handleSelectImage}>
+      <Tooltip title="Supported extensions .bmp, .jpg, .png, .pbm, .webp" placement="right">
         <label htmlFor="input-file" className="uploadImage-label">
           Select an Image
         </label>
-      </button>
+      </Tooltip>
       <input
         type="file"
         id="input-file"
@@ -35,7 +28,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ handleImageChange, selectedIm
           <p>Selected Image: {selectedImage.name}</p>
           <img
             src={URL.createObjectURL(selectedImage)}
-            alt="Selected"
+            alt="Selected-image"
             className="uploadImage-selected-image"
           />
         </div>

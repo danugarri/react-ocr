@@ -8,12 +8,19 @@
 }
 
 .uploadImage-button {
-    /* background-color: ; */
     cursor: pointer;
 }
 
 .uploadImage-label {
-    cursor: inherit;
+    cursor: pointer;
+    padding: 10px;
+    color: #000;
+    font-weight: 500;
+}
+
+.uploadImage-label:hover {
+    border: 1px solid rgb(95, 95, 250);
+    border-radius: 10px;
 }
 
 .uploadImage-no-files {

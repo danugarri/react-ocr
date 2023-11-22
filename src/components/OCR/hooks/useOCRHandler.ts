@@ -37,6 +37,7 @@ export const useOCRHandler = (selectedImage: File | null) => {
           console.log(text);
           setText(normalizedText);
           setIsLoading(false);
+          setProgress(0);
         }
       } catch (e) {
         errorSetter(e as Error);
