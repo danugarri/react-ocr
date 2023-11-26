@@ -2,7 +2,6 @@ import Tesseract from 'tesseract.js';
 import { useEffect, useState } from 'react';
 import { RecognizeConfigType } from '../OCR.types';
 import { OCRStatus } from '../OCR.consts';
-import { generatePDF } from '../../PdfGenerator/pdfGenerator';
 
 export const useOCRHandler = (selectedImage: File | null) => {
   const [text, setText] = useState<string>();
@@ -45,7 +44,6 @@ export const useOCRHandler = (selectedImage: File | null) => {
       if (text) {
         console.log(text);
         setText(text);
-        generatePDF(text);
         setIsLoading(false);
         setProgress(0);
       }
