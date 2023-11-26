@@ -4,7 +4,7 @@ export const generatePDF = (text: string) => {
   const doc = new jsPDF();
   const textOptions: TextOptionsLight = {
     align: 'left',
-    maxWidth: 100,
+    maxWidth: 185,
   };
   doc.setFont('times', 'italic');
   doc.text(text, 10, 10, textOptions);

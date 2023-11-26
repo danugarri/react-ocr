@@ -1,9 +1,9 @@
 .ocr-buttons-container {
+    font-size: 12px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 30%;
-    flex-wrap: wrap;
 }
 
 .ocr-text-container {
