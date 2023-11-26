@@ -4,6 +4,7 @@ import { useOCRHandler } from './hooks/useOCRHandler';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import AlertDialog from '../Dialog/Dialog';
 import { generatePDF } from '../PdfGenerator/pdfGenerator';
+import './OCR.css';
 
 export const OCR: React.FC<OCRProps> = ({ selectedImage, resetSelectedImage }) => {
   const { error, isLoading, text, progress } = useOCRHandler(selectedImage);
@@ -12,12 +13,18 @@ export const OCR: React.FC<OCRProps> = ({ selectedImage, resetSelectedImage }) =
     return <ProgressBar OCRProgress={progress} />;
   } else if (error) {
     return <AlertDialog error={error} resetSelectedImage={resetSelectedImage} />;
-  } else {
+  } else if (text) {
     return (
       <>
-        <button onClick={() => generatePDF(text)}>Download PDF</button>
-        <button onClick={() => setDisplayText(!displayText)}>Display text</button>
-        {displayText && <p>{text}</p>}
+        <section className="ocr-buttons-container">
+          <button onClick={() => generatePDF(text)}>Download PDF</button>
+          <button onClick={() => setDisplayText(!displayText)}>Display text</button>
+        </section>
+        {displayText && (
+          <section className="ocr-text-container">
+            <pre className="ocr-text">{text}</pre>
+          </section>
+        )}
       </>
     );
   }

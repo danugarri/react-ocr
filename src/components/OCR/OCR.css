@@ -1,0 +1,31 @@
+.ocr-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30%;
+    flex-wrap: wrap;
+}
+
+.ocr-text-container {
+    margin-top: 5%;
+    width: 60dvw;
+    text-align: justify;
+    font-size: 11px;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    background-color: rgb(239, 239, 241);
+    border-left: 3px solid blue;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.ocr-text {
+    margin-left: 20px;
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+    height: 30dvh;
+    cursor: text;
+    padding-bottom: 0.25rem
+}
