@@ -40,8 +40,9 @@ export const generatePDF = (text: string) => {
     ) {
       addFooter();
       addPage();
+    } else if (doc.internal.pages.length - 1 === 1) {
+      addFooter();
     }
-
     // Add text to the PDF
     doc.text(line, xPos, yPos, textOptions);
 
