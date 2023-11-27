@@ -7,28 +7,39 @@ export const generatePDF = (text: string) => {
     maxWidth: 185,
   };
 
-  // Set margin and padding
+  // Set margin, padding, and footer height
   const margin = 20;
   const padding = 5;
+  const footerHeight = 15;
 
   // Set initial position
-  const xPos = margin;
+  const xPos = 10;
   let yPos = margin;
 
-  // Set page height and width
-  const pageHeight = doc.internal.pageSize.height - 2 * margin;
-  const pageWidth = doc.internal.pageSize.width - 2 * margin;
+  const addPage = () => {
+    doc.addPage();
+    yPos = margin; // Reset yPos for the new page
+    addFooter(); // Add the footer on each new page
+  };
 
-  // Split text into lines
-  const lines = doc.splitTextToSize(text, pageWidth - 2 * padding);
+  const addFooter = () => {
+    const pageNumber = doc.internal.pages.length - 1;
+
+    doc.setFontSize(12);
+    doc.text(`Page ${pageNumber}`, 185, doc.internal.pageSize.height - margin, {});
+  };
 
   // Loop through lines and add to the PDF
-  lines.forEach((line: string) => {
+  text.split('\n').forEach((line: string) => {
+    // reset font-size
+    doc.setFontSize(14);
     // Check if adding the current line exceeds the page height
-    if (yPos + doc.getTextDimensions(line, textOptions).h + padding > pageHeight) {
-      // Add a new page if the current line exceeds the page height
-      doc.addPage();
-      yPos = margin; // Reset yPos for the new page
+    if (
+      yPos + doc.getTextDimensions(line, textOptions).h + padding >
+      doc.internal.pageSize.height - 2 * margin - footerHeight
+    ) {
+      addFooter();
+      addPage();
     }
 
     // Add text to the PDF
@@ -39,5 +50,5 @@ export const generatePDF = (text: string) => {
   });
 
   // Save the PDF
-  doc.save('OcrPDF.pdf');
+  doc.save('OcrPDF-danugarri.pdf');
 };
