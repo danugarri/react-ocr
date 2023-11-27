@@ -1,3 +1,1 @@
-export enum OCRStatus {
-  RECOGNIZING_TEXT = 'recognizing text',
-}
+export const progressInitialState = { percentage: 0, message: null };

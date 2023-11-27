@@ -10,7 +10,7 @@ export const OCR: React.FC<OCRProps> = ({ selectedImage, resetSelectedImage }) =
   const { error, isLoading, text, progress } = useOCRHandler(selectedImage);
   const [displayText, setDisplayText] = useState(false);
   if (isLoading) {
-    return <ProgressBar OCRProgress={progress} />;
+    return <ProgressBar {...progress} />;
   } else if (error) {
     return <AlertDialog error={error} resetSelectedImage={resetSelectedImage} />;
   } else if (text) {

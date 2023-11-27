@@ -1,20 +1,21 @@
 import Tesseract from 'tesseract.js';
 import { useEffect, useState } from 'react';
-import { RecognizeConfigType } from '../OCR.types';
-import { OCRStatus } from '../OCR.consts';
+import { ProgressType, RecognizeConfigType, OCRStatus } from '../OCR.types';
+import { progressInitialState } from '../OCR.consts';
 
 export const useOCRHandler = (selectedImage: File | null) => {
   const [text, setText] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState<ProgressType>(progressInitialState);
 
   const errorSetter = (error: Error) => {
     setError(error);
     setIsLoading(false);
   };
 
-  const getProgress = (progress: number) => setProgress(progress);
+  const getProgress = ({ percentage, message }: ProgressType) =>
+    setProgress({ percentage, message });
 
   useEffect(() => {
     const ocrHandler = async (path: string) => {
@@ -25,9 +26,10 @@ export const useOCRHandler = (selectedImage: File | null) => {
         options: {
           logger: ({ progress, status }) => {
             console.log({ status, progress });
+            getProgress({ percentage: 0, message: status });
             if (status === OCRStatus.RECOGNIZING_TEXT)
               if (progress) {
-                getProgress(progress);
+                getProgress({ percentage: progress, message: status });
               }
           },
           errorHandler: (e) => {
@@ -45,7 +47,7 @@ export const useOCRHandler = (selectedImage: File | null) => {
         console.log(text);
         setText(text);
         setIsLoading(false);
-        setProgress(0);
+        setProgress(progressInitialState);
       }
     };
     if (selectedImage) {
