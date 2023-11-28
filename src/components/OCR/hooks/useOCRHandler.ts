@@ -25,7 +25,6 @@ export const useOCRHandler = (selectedImage: File | null) => {
         langs: 'eng+spa', // Support for English and Spanish text
         options: {
           logger: ({ progress, status }) => {
-            console.log({ status, progress });
             getProgress({ percentage: 0, message: status });
             if (status === OCRStatus.RECOGNIZING_TEXT)
               if (progress) {
