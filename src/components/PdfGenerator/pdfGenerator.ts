@@ -24,7 +24,6 @@ export const generatePDF = (text: string) => {
       yPos + doc.getTextDimensions(line, textOptions).h + padding >
       doc.internal.pageSize.height - 2 * margin - footerHeight
     ) {
-      addFooter(doc);
       addPage();
     } else if (doc.internal.pages.length - 1 === 1) {
       addFooter(doc);
